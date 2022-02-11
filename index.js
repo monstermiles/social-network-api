@@ -1,12 +1,14 @@
 const express = require('express');
 const db = require('./config/connection');
 
+const routes = require('./routes');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(routes);
 
 db.once('open', () => {
   app.listen(PORT, () => {
@@ -16,26 +18,16 @@ db.once('open', () => {
 
 
 
-// Require model
-const { User } = require('./models');
-
-
-
-app.get('/users', (req, res) => {
-    // Using model in route to find all documents that are instances of that model
-    User.find({}, (err, result) => {
-      if (err) {
-        res.status(500).send({ message: 'Internal Server Error' });
-      } else {
-        res.status(200).json(result);
-      }
-    });
-  });
 
 
 
 
-  
+
+
+
+
+
+
 
 // const express = require('express');
 // // Run npm install mongodb and require mongodb and MongoClient class
