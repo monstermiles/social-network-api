@@ -43,16 +43,34 @@ router.get('/:id', (req, res) => {
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////edit a user///////////////////////////////////////////////////////
+router.put('/:id', (req, res) => {
+  try {
+  const updateId = req.params.id
+  const userData = User.findOneAndUpdate(
+    {updateId},
+    {username: req.body.username},
+    {new: true},
+    )
+    res.status(200).json(userData)
+  } catch (err){
+    res.json(err)
+  }
+});
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////delete user//////////////////////////////////////////////////////////
+router.delete('/:id', (req, res) => {
+try {
+  const userData = User.findOneAndDelete({
+    _id: req.params.id
+  });
+ res.status(200).json(userData)
+}catch (err){
+res.json(err)
+}
+});
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 module.exports = router;
 
-
-
-
-
-
-
-  // * `createdAt`
-//   * Date
-//   * Set default value to the current timestamp
-//   * Use a getter method to format the timestamp on query
