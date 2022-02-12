@@ -3,8 +3,6 @@ const router = require('express').Router();
 // Require model
 const { User } = require('../../models');
 
-
-
 ///////////////////////////////////////view all users/////////////////////////////////////////////////////////
 router.get('/', (req, res) => {
     User.find({}, (err, result) => {
@@ -31,7 +29,22 @@ router.post('/create', (req, res) => {
   })
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-  module.exports = router;
+///////////////////////////////////////find user by id/////////////////////////////////////////////////////////
+router.get('/:id', (req, res) => {
+  User.findOne({
+    _id: req.params.id
+  }, (err, result) => {
+    if (err) {
+      res.status(500).send({ message: 'Internal Server Error' });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+module.exports = router;
 
 
 
