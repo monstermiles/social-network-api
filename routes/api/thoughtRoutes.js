@@ -1,8 +1,22 @@
 const router = require('express').Router();
 
 const { Thought } = require('../../models');
+
+
+////////////////////////////////////////view all thoughts ////////////////////////////////////////////////////////
+router.get('/', (req, res) => {
+  Thought.find({}, (err, result) => {
+    if (err) {
+      res.status(500).send({ message: 'Internal Server Error' });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 /////////////////////////////////////add a thought////////////////////////////////////////////////////////
-router.post('/create', (req, res) => {
+router.post('/', (req, res) => {
     try {
     const newThought = new Thought(req.body)
     newThought.save();

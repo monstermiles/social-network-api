@@ -1,11 +1,5 @@
 const {Schema, model} = require('mongoose');
 
-// * `thoughts`
-//   * Array of `_id` values referencing the `Thought` model
-
-// * `friends`
-//   * Array of `_id` values referencing the `User` model (self-reference)
-
   
 const userSchema = new Schema({
     username: {
@@ -25,6 +19,9 @@ const userSchema = new Schema({
          ref: 'Thoughts' 
         }
      ],
+
+     // * `friends`
+//   * Array of `_id` values referencing the `User` model (self-reference)
     friends: [
         {type: Schema.Types.ObjectId,
         ref: 'User'}
