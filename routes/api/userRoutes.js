@@ -4,14 +4,13 @@ const router = require('express').Router();
 const { User } = require('../../models');
 
 ///////////////////////////////////////view all users/////////////////////////////////////////////////////////
-router.get('/', (req, res) => {
-    User.find({}, (err, result) => {
-      if (err) {
-        res.status(500).send({ message: 'Internal Server Error' });
-      } else {
-        res.status(200).json(result);
-      }
-    });
+router.get('/', async (req, res) => {
+   try {
+    const userData = await User.find()
+    res.status(200).json(userData)
+   } catch (err){
+    res.json(err)
+   }
   });
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -59,10 +58,10 @@ router.put('/:id', async (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////delete user//////////////////////////////////////////////////////////
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
 try {
-  const userData = User.findOneAndDelete({
-    _id: req.params.id
+  const userData = await User.findOneAndDelete({
+    _id: req.params.id,
   });
  res.status(200).json(userData)
 }catch (err){
