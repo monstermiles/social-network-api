@@ -68,5 +68,38 @@ res.json(err)
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+/////////////////////////////////add a friend///////////////////////////////////////////////////////////////
+router.put('/:id/friends', async (req, res) => {
+  try {
+    const addFriend = await User.findOneAndUpdate(
+      {_id: req.params.id},
+      {$set: req.body},
+      {runValidators: true, new: true}
+    )
+    res.status(200).json(addFriend)
+  } catch (err) {
+    res.json(err)
+  }
+});
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////delete a friend//////////////////////////////////////////////////////////////
+router.delete('/:id/friends/:friendId', async (req, res) => {
+  try {
+    const deleteFriend = await User.findOneAndUpdate(
+      {_id: req.params.id},
+      {$pull: {friends: req.params.friendId}},
+      {runValidators: true, new: true},
+    )
+    res.status(200).json(deleteFriend)
+  } catch (err) {
+    res.json(err)
+  }
+})
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 module.exports = router;
 
