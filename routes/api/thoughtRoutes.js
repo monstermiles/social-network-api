@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const { Thought } = require('../../models');
+const { update } = require('../../models/Thought');
 
 
 ////////////////////////////////////////view all thoughts ////////////////////////////////////////////////////////
@@ -41,6 +42,21 @@ router.get('/:id', (req, res) => {
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////update a thought//////////////////////////////////////////////////////////
+router.put('/:thoughtId', async (req, res) => {
+  try {
+    const updateThought = await Thought.findOneAndUpdate(
+      {_id: req.params.thoughtId},
+      {$set: req.body},
+      {runValidators: true, new: true}
+    )
+    res.status(200).json(updateThought)
+  } catch (err) {
+    res.json(err)
+  }
+});
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 //////////////////////////////////add a reaction//////////////////////////////////////////////////////////////
 router.post('/:thoughtId/reactions', async (req, res) => {
@@ -62,7 +78,7 @@ router.delete('/:thoughtId/reactions/:reactionID', async (req, res) => {
   try {
     const deleteReaction = await Thought.findOneAndUpdate(
       {_id: req.params.thoughtId},
-      {$pull: {reactions: req.params.reactionID}},
+      {$pull: {reactions: {_id: req.params.reactionID}}},
       {runValidators: true, new: true}
     )
     res.status(200).json(deleteReaction)
@@ -70,20 +86,6 @@ router.delete('/:thoughtId/reactions/:reactionID', async (req, res) => {
     res.json(err)
   }
 });
-
-
-// removeVideoResponse(req, res) {
-//   Video.findOneAndUpdate(
-//     { _id: req.params.videoId },
-//     { $pull: { reactions: { responseId: req.params.responseId } } },
-//     { runValidators: true, new: true }
-//   )
-//     .then((video) =>
-//       !video
-//         ? res.status(404).json({ message: 'No video with this id!' })
-//         : res.json(video)
-//     )
-//     .catch((err) => res.status(500).json(err));
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
+
 module.exports = router;
