@@ -30,16 +30,17 @@ router.post('/', (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////find user by id/////////////////////////////////////////////////////////
-router.get('/:id', (req, res) => {
-  User.findOne({
-    _id: req.params.id
-  }, (err, result) => {
-    if (err) {
-      res.status(500).send({ message: 'Internal Server Error' });
-    } else {
-      res.status(200).json(result);
-    }
-  });
+router.get('/:id',async (req, res) => {
+  try {
+    const userData = await User.findOne({
+      _id: req.params.id
+    });
+    res.status(200).json(userData)
+  }
+  catch (err){
+    res.json(err)
+  }
+ 
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
