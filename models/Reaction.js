@@ -5,8 +5,10 @@ const {Schema, model, Mongoose, Types} = require('mongoose');
 
 
 const reactionSchema = new Schema({
-    reactionId: Types.ObjectId,
-
+    reactionId: {
+    type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
+    },
     reactionBody: {
         type: String,
         required: true,
@@ -20,13 +22,17 @@ const reactionSchema = new Schema({
         type: Date,
         default: Date.now,
     }
-})
+},
+{
+    toJSON: {
+        getters:true
+    }
+}
+
+)
 
 
 //   * Use a getter method to format the timestamp on query
 
 
-
-const Reaction = model('reaction', reactionSchema)
-
-module.exports = Reaction 
+module.exports = reactionSchema 

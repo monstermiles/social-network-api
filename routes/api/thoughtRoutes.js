@@ -40,4 +40,37 @@ router.get('/:id', (req, res) => {
   });
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////add a reaction//////////////////////////////////////////////////////////////
+router.post('/:thoughtId/reactions', async (req, res) => {
+  try {
+    const newReaction = await Thought.findOneAndUpdate(
+      {_id:req.params.thoughtId},
+      {$addToSet: {reactions: req.body}},
+      {runValidators: true, new: true}
+    )
+    res.status(200).json(newReaction)
+  } catch (err) {
+    res.json(err)
+  }
+});
+
+
+// addVideoResponse(req, res) {
+//   Video.findOneAndUpdate(
+//     { _id: req.params.videoId },
+//     { $addToSet: { responses: req.body } },
+//     { runValidators: true, new: true }
+//   )
+//     .then((video) =>
+//       !video
+//         ? res.status(404).json({ message: 'No video with this id!' })
+//         : res.json(video)
+//     )
+//     .catch((err) => res.status(500).json(err));
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 module.exports = router;
