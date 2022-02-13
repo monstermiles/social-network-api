@@ -3,7 +3,8 @@ const router = require('express').Router();
 // Require model
 const { Reaction } = require('../../models');
 
-router.post('/create', (req, res) => {
+/////////////////////////////////////add a reaction///////////////////////////////////////////////////////////
+router.post('/', (req, res) => {
     try {
     const newReaction = new Reaction(req.body)
     newReaction.save();
@@ -12,7 +13,17 @@ router.post('/create', (req, res) => {
       res.err
     }
   })
+////////////////////////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////delete a reaction//////////////////////////////////////////////////////////
+router.delete('/:id', (req, res) => {
+  try {
+    Reaction.findOneAndDelete(req.params.id)
+    res.status(200).json('Reaction deleted.')
+  } catch (err) {
+    res.json(err)
+  }
+});
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = router;

@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 //////////////////////////////////////add a user//////////////////////////////////////////////////////////
   
 ///////need error handling for failed email validation////////
-router.post('/create', (req, res) => {
+router.post('/', (req, res) => {
     try {
     const newUser = new User(req.body)
     newUser.save();
@@ -44,13 +44,11 @@ router.get('/:id', (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////edit a user///////////////////////////////////////////////////////
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
-  const updateId = req.params.id
-  const userData = User.findOneAndUpdate(
-    {updateId},
+  const userData = await User.findOneAndUpdate(
+    {_id: req.params.id},
     {username: req.body.username},
-    {new: true},
     )
     res.status(200).json(userData)
   } catch (err){
