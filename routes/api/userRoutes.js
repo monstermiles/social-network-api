@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
 
 //////////////////////////////////////add a user//////////////////////////////////////////////////////////
   
-///////need error handling for failed email validation////////
 router.post('/', (req, res) => {
     try {
     const newUser = new User(req.body)

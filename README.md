@@ -13,6 +13,13 @@
         ## Description
         This is a back-end application for a simple social networking site. It allows you to view, add, update, and delete users and thoughts, as well as add users to friends lists and react to other user's thoughts. It is made using Express.js, MongoDB and Mongoose. I used Insomnia for testing the routes. 
 
+
+        Here are some links to walkthrough videos. Its long. Sorry.
+        https://drive.google.com/file/d/1a03MkHtdWZSASC-bDL3YjeaGyNS_tJRG/view?usp=sharing
+
+        https://drive.google.com/file/d/1-8O6E6LpyTOtvVMWrrMyLgSG15_doOrF/view?usp=sharing
+
+
         ## Installation
         Clone the repo, make sure you have Mongo/Compass installed as well as Insomnia or a similar program for testing routes.
 
